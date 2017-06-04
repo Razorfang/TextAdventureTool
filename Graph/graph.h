@@ -25,6 +25,32 @@ Vertex<T>::Vertex () {
 
 }
 
+//Useful for if you want to make data storage, such as a tree
+template <typename T>
+class ValuedVertex: public Vertex<T> {
+	private:
+		T value;
+	public:
+		ValuedVertex(T value);
+		T getValue();
+		void setValue(T value);
+};
+
+template <typename T>
+ValuedVertex<T>::ValuedVertex(T value): Vertex<T>::Vertex() {
+	this->value = value;
+}
+
+template <typename T>
+T ValuedVertex<T>::getValue() {
+	return this->value;
+}
+
+template <typename T>
+void ValuedVertex<T>::setValue(T value) {
+	this->value = value;
+}
+
 
 template <typename T>
 class Edge {
@@ -68,7 +94,14 @@ void WeightedEdge<T>::setWeight(int weight) {
 
 
 template <typename T>
+class DirectedEdge: public Edge<T> {
+};
+
+
+template <typename T>
 class Graph {
+private:
+	//All the vertexes
 	//adjacency list
 };
 #endif /* GRAPH_GRAPH_H_ */
