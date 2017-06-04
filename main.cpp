@@ -12,7 +12,7 @@ using namespace std;
 
 int main() {
 
-	Vertex<int> v1;
+	/*Vertex<int> v1;
 	ValuedVertex<int> v2(5);
 	Edge<int> e(&v1, &v2);
 	WeightedEdge<int> we(&v1, &v2, 100);
@@ -23,6 +23,7 @@ int main() {
 
 	cout << v2.getValue() << endl;
 	v2.setValue(36);
-	cout << v2.getValue() << endl;
+	cout << v2.getValue() << endl;*/
+
 	return 0;
 }

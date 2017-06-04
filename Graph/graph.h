@@ -10,7 +10,8 @@
 #ifndef GRAPH_GRAPH_H_
 #define GRAPH_GRAPH_H_
 
-#include <vector>
+#include <unordered_set>
+#include <unordered_map>
 using namespace std;
 
 template <typename T>
@@ -26,6 +27,7 @@ Vertex<T>::Vertex () {
 }
 
 //Useful for if you want to make data storage, such as a tree
+//T should be a single object or class that contains everything you need to know, such as a StoryNode
 template <typename T>
 class ValuedVertex: public Vertex<T> {
 	private:
@@ -101,7 +103,41 @@ class DirectedEdge: public Edge<T> {
 template <typename T>
 class Graph {
 private:
-	//All the vertexes
-	//adjacency list
+	//All the vertexes. Kept in an unordered set because adding/removing vertexes won't happen often, but accessing them will
+	//Will need a hash function to get the correct index of a graph node. Also need to watch out for hash collisions
+	unordered_set<Vertex<T>> vertices;
+	//Adjacency list. Like the vertices, this will not change often. The same indexes will be used as the vertices
+	unordered_map<Vertex<T>, unordered_set<Vertex<T>>> adjacencyList;
+
+public:
+	Graph();
+	~Graph();
+	void addVertex(Vertex<T> v, unordered_set<Vertex<T>> adjacent);
+	void removeVertex(Vertex<T> v);
+	void printGraph();
 };
+
+template <typename T>
+Graph<T>::Graph() {
+}
+
+template <typename T>
+Graph<T>::~Graph() {
+}
+
+template <typename T>
+void Graph<T>::addVertex(Vertex<T> v, unordered_set<Vertex<T>> adjacent) {
+	this->vertices.insert(v);
+	this->adjacencyList.insert(make_pair(v, adjacent));
+}
+
+template <typename T>
+void Graph<T>::removeVertex(Vertex<T> v) {
+	this->vertices.erase(v);
+	this->adjacencyList.erase(v);
+}
+
+template <typename T>
+void Graph<T>::printGraph() {
+}
 #endif /* GRAPH_GRAPH_H_ */
