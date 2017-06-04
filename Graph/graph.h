@@ -10,46 +10,32 @@
 #ifndef GRAPH_GRAPH_H_
 #define GRAPH_GRAPH_H_
 
-#include <unordered_set>
+#include <vector>
 #include <unordered_map>
 using namespace std;
 
 template <typename T>
 class Vertex {
 	private:
-	public:
-		Vertex();
-};
-
-template <typename T>
-Vertex<T>::Vertex () {
-
-}
-
-//Useful for if you want to make data storage, such as a tree
-//T should be a single object or class that contains everything you need to know, such as a StoryNode
-template <typename T>
-class ValuedVertex: public Vertex<T> {
-	private:
 		T value;
 	public:
-		ValuedVertex(T value);
+		Vertex(T value);
 		T getValue();
 		void setValue(T value);
 };
 
 template <typename T>
-ValuedVertex<T>::ValuedVertex(T value): Vertex<T>::Vertex() {
+Vertex<T>::Vertex(T value) {
 	this->value = value;
 }
 
 template <typename T>
-T ValuedVertex<T>::getValue() {
+T Vertex<T>::getValue() {
 	return this->value;
 }
 
 template <typename T>
-void ValuedVertex<T>::setValue(T value) {
+void Vertex<T>::setValue(T value) {
 	this->value = value;
 }
 
@@ -71,16 +57,15 @@ Edge<T>::Edge (Vertex<T> *first, Vertex<T> *second) {
 template <typename T>
 class WeightedEdge: public Edge<T> {
 	private:
-		int weight;
+		long double weight;
 	public:
-		WeightedEdge(Vertex<T> *first, Vertex<T> *second, int weight);
+		WeightedEdge(Vertex<T> *first, Vertex<T> *second, long double weight);
 		int getWeight();
-		void setWeight(int weight);
+		void setWeight(long double weight);
 };
 
 template <typename T>
-WeightedEdge<T>::WeightedEdge (Vertex<T> *first, Vertex<T> *second, int weight): Edge<T>::Edge (first, second) {
-
+WeightedEdge<T>::WeightedEdge (Vertex<T> *first, Vertex<T> *second, long double weight): Edge<T>::Edge(first, second) {
 	this->weight = weight;
 }
 
@@ -90,10 +75,9 @@ int WeightedEdge<T>::getWeight() {
 }
 
 template <typename T>
-void WeightedEdge<T>::setWeight(int weight) {
+void WeightedEdge<T>::setWeight(long double weight) {
 	this->weight = weight;
 }
-
 
 template <typename T>
 class DirectedEdge: public Edge<T> {
@@ -103,18 +87,16 @@ class DirectedEdge: public Edge<T> {
 template <typename T>
 class Graph {
 private:
-	//All the vertexes. Kept in an unordered set because adding/removing vertexes won't happen often, but accessing them will
-	//Will need a hash function to get the correct index of a graph node. Also need to watch out for hash collisions
-	unordered_set<Vertex<T>> vertices;
-	//Adjacency list. Like the vertices, this will not change often. The same indexes will be used as the vertices
-	unordered_map<Vertex<T>, unordered_set<Vertex<T>>> adjacencyList;
+	//Now I know what you're thinking. Graph theory taught me that a graph needs a set of nodes, and an adjacency list.
+	//All you've given us is an adjacency list.
+	//Well, since we need to use our nodes as keys, the set of keys is equivalent to the set of nodes. So there.
+	unordered_map<Vertex<T>, vector<Vertex<T>>> adjacencyList;
 
 public:
 	Graph();
 	~Graph();
-	void addVertex(Vertex<T> v, unordered_set<Vertex<T>> adjacent);
+	void addVertex(Vertex<T> v, vector<Vertex<T>> adjacent);
 	void removeVertex(Vertex<T> v);
-	void printGraph();
 };
 
 template <typename T>
@@ -126,18 +108,13 @@ Graph<T>::~Graph() {
 }
 
 template <typename T>
-void Graph<T>::addVertex(Vertex<T> v, unordered_set<Vertex<T>> adjacent) {
-	this->vertices.insert(v);
-	this->adjacencyList.insert(make_pair(v, adjacent));
+void Graph<T>::addVertex(Vertex<T> v, vector<Vertex<T>> adjacent) {
+	this->adjacencyList.emplace(v, adjacent);
 }
 
 template <typename T>
 void Graph<T>::removeVertex(Vertex<T> v) {
-	this->vertices.erase(v);
 	this->adjacencyList.erase(v);
 }
 
-template <typename T>
-void Graph<T>::printGraph() {
-}
 #endif /* GRAPH_GRAPH_H_ */
