@@ -33,9 +33,9 @@ int main() {
 
 	//Because we are using an unordered set, we need to define a hash function for
 	//Vertex<int>. We need to make a hash function for each of our types
-	Vertex<int> v(5);
-	Vertex<int> w(7);
-	Vertex<int> x(9);
+
+
+	/*
 
 	vector<Vertex<int>> va = {w, x};
 	vector<Vertex<int>> wa = {v};
@@ -44,7 +44,28 @@ int main() {
 	Graph<int> g;
 	g.addVertex(v, va);
 	g.addVertex(w, wa);
-	g.addVertex(x, xa);
+	g.addVertex(x, xa);*/
+
+	/*Vertex<int> *v = new Vertex<int>(5);
+	Vertex<int> *w = new Vertex<int>(7);
+	Vertex<int> *x = new Vertex<int>(9);
+	delete v;
+	delete w;
+	delete x;*/
+
+	/*int *v = new int(5);
+	int *w = new int(7);
+	int *x = new int(9);
+
+	vector<int *> av = {w, x};
+	vector<int *> aw = {v};
+	vector<int *> ax = {v};
+
+	Graph<int> g;
+
+	delete v;
+	delete w;
+	delete x;*/
 
 	return 0;
 }

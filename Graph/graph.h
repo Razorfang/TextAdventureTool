@@ -22,6 +22,11 @@ class Vertex {
 		Vertex(T value);
 		T getValue();
 		void setValue(T value);
+
+		//Equality check. This also requires an equality check to exist for T. If it does not (e.g. custom class), make sure you impemented one
+		bool operator==(const Vertex<T>& v) {
+			return (this->value == v.value);
+		}
 };
 
 template <typename T>
@@ -37,6 +42,24 @@ T Vertex<T>::getValue() {
 template <typename T>
 void Vertex<T>::setValue(T value) {
 	this->value = value;
+}
+
+
+//If you want to hash a vertex, T needs a way of being hashed
+/*template <typename T>
+class VertexHash {
+	size_t operator()(const Vertex<T> &v) const {
+		return hash<T>()(v.value);
+	}
+};*/
+
+//If you want to hash a vertex, T needs a way of being hashed
+namespace std {
+	template<typename T> struct hash<Vertex<T>> {
+		size_t operator()(Vertex<T> const& v) const {
+			return hash(v.value);
+		}
+	};
 }
 
 
@@ -90,13 +113,16 @@ private:
 	//Now I know what you're thinking. Graph theory taught me that a graph needs a set of nodes, and an adjacency list.
 	//All you've given us is an adjacency list.
 	//Well, since we need to use our nodes as keys, the set of keys is equivalent to the set of nodes. So there.
+
 	unordered_map<Vertex<T>, vector<Vertex<T>>> adjacencyList;
 
 public:
-	Graph();
+	Graph(); //Needs a hash function. For example, if your vertices are storing std::pairs, we need a hash to convert the pair into a key
+			 //Since I don't know what you will be storing, you should provide a hash function
 	~Graph();
-	void addVertex(Vertex<T> v, vector<Vertex<T>> adjacent);
-	void removeVertex(Vertex<T> v);
+	//Since we are initialising a new object, v must be whatever we are using to initialise our vertices
+	void addVertex(T value, vector<T> adjacent);
+	void removeVertex(T value);
 };
 
 template <typename T>
@@ -108,13 +134,28 @@ Graph<T>::~Graph() {
 }
 
 template <typename T>
-void Graph<T>::addVertex(Vertex<T> v, vector<Vertex<T>> adjacent) {
-	this->adjacencyList.emplace(v, adjacent);
+void Graph<T>::addVertex(T value, vector<T> adjacent) {
+	//Check that the value does not already exist
+	if (this->adjacencyList.find(Vertex<T>(value)) != this->adjacencyList.end()) {
+		Vertex<T> v = Vertex<T>(value);
+		vector<Vertex<T>> adj;
+		for (int i = 0; i < adjacent.size(); i++) {
+			adj.insert(Vertex<T>(adjacent[i]));
+		}
+		this->adjacencyList.insert(make_pair(v, adj));
+	}
+		//If the values does not exist, place it and the adjacency in there
+		//Otherwise, do nothing
+
+
 }
 
 template <typename T>
-void Graph<T>::removeVertex(Vertex<T> v) {
-	this->adjacencyList.erase(v);
+void Graph<T>::removeVertex(T value) {
+	//Check that the value does not already exist
+	if (this->adjacencyList.find(Vertex<T>(value)) != this->adjacencyList.end()) {
+
+	}
 }
 
 #endif /* GRAPH_GRAPH_H_ */
