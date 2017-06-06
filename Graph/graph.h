@@ -57,7 +57,7 @@ class VertexHash {
 namespace std {
 	template<typename T> struct hash<Vertex<T>> {
 		size_t operator()(Vertex<T> const& v) const {
-			return hash(v.value);
+			return hash(v.getValue());
 		}
 	};
 }
@@ -123,6 +123,7 @@ public:
 	//Since we are initialising a new object, v must be whatever we are using to initialise our vertices
 	void addVertex(T value, vector<T> adjacent);
 	void removeVertex(T value);
+	void printGraph();
 };
 
 template <typename T>
@@ -139,8 +140,9 @@ void Graph<T>::addVertex(T value, vector<T> adjacent) {
 	if (this->adjacencyList.find(Vertex<T>(value)) != this->adjacencyList.end()) {
 		Vertex<T> v = Vertex<T>(value);
 		vector<Vertex<T>> adj;
-		for (int i = 0; i < adjacent.size(); i++) {
-			adj.insert(Vertex<T>(adjacent[i]));
+		for (unsigned int i = 0; i < adjacent.size(); i++) {
+			Vertex<T> vAdj = Vertex<T>(adjacent[i]);
+			adj.push_back(vAdj);
 		}
 		this->adjacencyList.insert(make_pair(v, adj));
 	}
@@ -153,9 +155,13 @@ void Graph<T>::addVertex(T value, vector<T> adjacent) {
 template <typename T>
 void Graph<T>::removeVertex(T value) {
 	//Check that the value does not already exist
-	if (this->adjacencyList.find(Vertex<T>(value)) != this->adjacencyList.end()) {
-
-	}
+	//if (this->adjacencyList.find(Vertex<T>(value)) != this->adjacencyList.end()) {
+		this->adjacencyList.erase(Vertex<T>(value));
+	//}
 }
 
+template <typename T>
+void Graph<T>::printGraph() {
+
+}
 #endif /* GRAPH_GRAPH_H_ */

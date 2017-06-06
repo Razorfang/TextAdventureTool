@@ -53,19 +53,21 @@ int main() {
 	delete w;
 	delete x;*/
 
-	/*int *v = new int(5);
-	int *w = new int(7);
-	int *x = new int(9);
+	int v = 5;
+	int w = 7;
+	int x = 9;
 
-	vector<int *> av = {w, x};
-	vector<int *> aw = {v};
-	vector<int *> ax = {v};
+	vector<int> av = {w, x};
+	vector<int> aw = {v};
+	vector<int> ax = {v};
 
 	Graph<int> g;
+	g.addVertex(v, av);
+	g.addVertex(w, aw);
+	g.addVertex(x, ax);
 
-	delete v;
-	delete w;
-	delete x;*/
+	g.printGraph();
+
 
 	return 0;
 }
