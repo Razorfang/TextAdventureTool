@@ -80,6 +80,7 @@ template <typename T>
 Graph<T>::~Graph() {
 }
 
+//NOTE: Should we allow something to be its own neighbor? This might be good for repeating something in the vertex over and over....
 template <typename T>
 void Graph<T>::addVertex(T value, std::vector<T> adjacent) {
 

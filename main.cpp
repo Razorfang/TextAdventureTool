@@ -10,63 +10,50 @@ using namespace std;
 
 #include "Graph/graph.h"
 
-template <typename T>
-size_t vertexHash (const Vertex<T> & v) {
-	T value = v.getValue;
-	return value;
-}
-
 int main() {
 
-	/*Vertex<int> v1;
-	ValuedVertex<int> v2(5);
-	Edge<int> e(&v1, &v2);
-	WeightedEdge<int> we(&v1, &v2, 100);
+	/* Test cast that works perfectly
+	int a = 1;
+	int b = 2;
+	int c = 3;
+	int d = 4;
+	int e = 5;
+	int f = 6;
+	int g = 7;
+	int h = 8;
+	int i = 9;
+	int j = 10;
+	int k = 11;
+	int l = 12;
 
-	cout << we.getWeight() << endl;
-	we.setWeight(19);
-	cout << we.getWeight() << endl;
+	vector<int> aa = {b, c};
+	vector<int> ab = {a, d, e};
+	vector<int> ac = {a, e, f};
+	vector<int> ad = {a, b};
+	vector<int> ae = {b, c};
+	vector<int> af = {c, h, i};
+	vector<int> ag = {i};
+	vector<int> ah = {e, f, j, k};
+	vector<int> ai = {f, g, j};
+	vector<int> aj = {h, i, l};
+	vector<int> ak = {h, l};
+	vector<int> al = {j, k};
 
-	cout << v2.getValue() << endl;
-	v2.setValue(36);
-	cout << v2.getValue() << endl;*/
+	Graph<int> gr;
+	gr.addVertex(a, aa);
+	gr.addVertex(b, ab);
+	gr.addVertex(c, ac);
+	gr.addVertex(d, ad);
+	gr.addVertex(e, ae);
+	gr.addVertex(f, af);
+	gr.addVertex(g, ag);
+	gr.addVertex(h, ah);
+	gr.addVertex(i, ai);
+	gr.addVertex(j, aj);
+	gr.addVertex(k, ak);
+	gr.addVertex(l, al);
 
-	//Because we are using an unordered set, we need to define a hash function for
-	//Vertex<int>. We need to make a hash function for each of our types
-
-
-	/*
-
-	vector<Vertex<int>> va = {w, x};
-	vector<Vertex<int>> wa = {v};
-	vector<Vertex<int>> xa = {v};
-
-	Graph<int> g;
-	g.addVertex(v, va);
-	g.addVertex(w, wa);
-	g.addVertex(x, xa);*/
-
-	/*Vertex<int> *v = new Vertex<int>(5);
-	Vertex<int> *w = new Vertex<int>(7);
-	Vertex<int> *x = new Vertex<int>(9);
-	delete v;
-	delete w;
-	delete x;*/
-
-	int v = 5;
-	int w = 7;
-	int x = 9;
-
-	vector<int> av = {w, x};
-	vector<int> aw = {v};
-	vector<int> ax = {v};
-
-	Graph<int> g;
-	g.addVertex(v, av);
-	g.addVertex(w, aw);
-	g.addVertex(x, ax);
-
-	g.printGraph();
+	gr.printGraph();*/
 
 	return 0;
 }
