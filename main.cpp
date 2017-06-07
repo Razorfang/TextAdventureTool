@@ -68,6 +68,5 @@ int main() {
 
 	g.printGraph();
 
-
 	return 0;
 }
