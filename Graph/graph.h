@@ -16,11 +16,11 @@
 template <typename T>
 class Vertex {
 	private:
-		T value;
+		T *value; //Store by reference to avoid copying large classes
 	public:
-		Vertex(T value);
-		T getValue() const;
-		void setValue(T value);
+		Vertex(T *value);
+		T *getValue() const;
+		void setValue(T *value);
 
 		//Equality check. This also requires an equality check to exist for T. If it does not (e.g. custom class), make sure you impemented one
 		bool operator==(const Vertex<T>& v) const{
@@ -29,17 +29,17 @@ class Vertex {
 };
 
 template <typename T>
-Vertex<T>::Vertex(T value) {
+Vertex<T>::Vertex(T *value) {
 	this->value = value;
 }
 
 template <typename T>
-T Vertex<T>::getValue() const{
+T *Vertex<T>::getValue() const{
 	return this->value;
 }
 
 template <typename T>
-void Vertex<T>::setValue(T value) {
+void Vertex<T>::setValue(T *value) {
 	this->value = value;
 }
 
@@ -47,7 +47,7 @@ void Vertex<T>::setValue(T value) {
 namespace std {
 	template<typename T> struct hash<Vertex<T>> {
 		size_t operator()(Vertex<T> const& v) const {
-			return hash<T>{}(v.getValue());
+			return hash<T>{}(*(v.getValue()));
 		}
 	};
 }
@@ -67,8 +67,8 @@ public:
 			 //Since I don't know what you will be storing, you should provide a hash function
 	~Graph();
 	//Since we are initialising a new object, v must be whatever we are using to initialise our vertices
-	void addVertex(T value, std::vector<T> adjacent);
-	void removeVertex(T value);
+	void addVertex(T *value, std::vector<T *> adjacent);
+	void removeVertex(T *value);
 	void printGraph();
 };
 
@@ -81,8 +81,9 @@ Graph<T>::~Graph() {
 }
 
 //NOTE: Should we allow something to be its own neighbor? This might be good for repeating something in the vertex over and over....
+//Also, should we allow a vertex to add a neighbor that does not currently exist
 template <typename T>
-void Graph<T>::addVertex(T value, std::vector<T> adjacent) {
+void Graph<T>::addVertex(T *value, std::vector<T *> adjacent) {
 
 	//Check that the value does not already exist
 	Vertex<T> v = Vertex<T>(value);
@@ -101,20 +102,23 @@ void Graph<T>::addVertex(T value, std::vector<T> adjacent) {
 }
 
 template <typename T>
-void Graph<T>::removeVertex(T value) {
+void Graph<T>::removeVertex(T *value) {
 	//Check that the value does not already exist
 	//if (this->adjacencyList.find(Vertex<T>(value)) != this->adjacencyList.end()) {
 		this->adjacencyList.erase(Vertex<T>(value));
 	//}
+
+		//If we remove a vertex, we also need to remove it from all the other vertices' list of neighbors
+		//Otherwise, we will have a reference to a vertex that does not exist
 }
 
 template <typename T>
 void Graph<T>::printGraph() {
 	std::vector<Vertex<T>> keys;
 	for(auto v: this->adjacencyList) {
-		cout << "KEY: " << v.first.getValue() << endl;
+		cout << "KEY: " << *(v.first.getValue()) << endl;
 		for (auto vAdj: v.second) {
-			cout << "VALUE: " << vAdj.getValue() << endl;
+			cout << "VALUE: " << *(vAdj.getValue()) << endl;
 		}
 	}
 
