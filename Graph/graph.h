@@ -111,8 +111,7 @@ void Graph<T>::addVertex(T *value, std::vector<T *> adjacent) {
 template <typename T>
 void Graph<T>::removeVertex(T *value) {
 
-	cout << "ERASING: " << *value << endl;
-
+	//Not a problem, since value is just an address. It's not like we're copying an entire object. Vertex is a small class, too
 	Vertex<T> outcast = Vertex<T>(value);
 
 	//If we remove a vertex, we also need to remove it from all the other vertices' list of neighbors
@@ -122,10 +121,8 @@ void Graph<T>::removeVertex(T *value) {
 	this->adjacencyList.erase(outcast);
 
 	for (auto n: neighbors) {
-		cout << "This neighbor has a value of " << *(n.getValue()) << endl;
 		auto it = std::find(this->adjacencyList[n].begin(), this->adjacencyList[n].end(), outcast);
 		if (it != this->adjacencyList[n].end()) {
-			cout << "We are looking at " << *(it->getValue()) << endl;
 			//I've read that if you don't care for order (like us), you can avoid overhead of moving items by
 			//swapping the outcast with the item at the end of the container, then calling pop_back.
 			std::swap(*it, this->adjacencyList[n].back());
@@ -135,9 +132,6 @@ void Graph<T>::removeVertex(T *value) {
 			cout << "Error, data entered incorrectly. Neighbors hate each other" << endl;
 		}
 	}
-
-	cout << "^^^" << endl;
-	this->printGraph();
 }
 
 template <typename T>
