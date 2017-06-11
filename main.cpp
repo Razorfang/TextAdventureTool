@@ -26,11 +26,11 @@ int main() {
 	int k = 11;
 	int l = 12;
 
-	vector<int *> aa = {&b, &c};
+	vector<int *> aa = {&b, &c, &d};
 	vector<int *> ab = {&a, &d, &e};
 	vector<int *> ac = {&a, &e, &f};
 	vector<int *> ad = {&a, &b};
-	vector<int *> ae = {&b, &c};
+	vector<int *> ae = {&b, &c, &h};
 	vector<int *> af = {&c, &h, &i};
 	vector<int *> ag = {&i};
 	vector<int *> ah = {&e, &f, &j, &k};
@@ -55,7 +55,13 @@ int main() {
 
 	gr.printGraph();
 
-	gr.removeVertex(&h);
+	gr.removeVertex(&a);
+	gr.removeVertex(&b);
+	gr.removeVertex(&c);
+	gr.removeVertex(&d);
+	gr.removeVertex(&e);
+	gr.removeVertex(&f);
+	gr.removeVertex(&g);
 
 	cout << "**********" << endl;
 	gr.printGraph();
