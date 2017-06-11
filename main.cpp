@@ -9,63 +9,32 @@
 using namespace std;
 
 #include "Graph/graph.h"
+#include "StoryNode/storynode.h"
 
 int main() {
 
-	//Test cast that works perfectly
-	int a = 1;
-	int b = 2;
-	int c = 3;
-	int d = 4;
-	int e = 5;
-	int f = 6;
-	int g = 7;
-	int h = 8;
-	int i = 9;
-	int j = 10;
-	int k = 11;
-	int l = 12;
+	StoryNode s1 = StoryNode(1);
+	StoryNode s2 = StoryNode(2);
+	StoryNode s3 = StoryNode(3);
 
-	vector<int *> aa = {&b, &c, &d};
-	vector<int *> ab = {&a, &d, &e};
-	vector<int *> ac = {&a, &e, &f};
-	vector<int *> ad = {&a, &b};
-	vector<int *> ae = {&b, &c, &h};
-	vector<int *> af = {&c, &h, &i};
-	vector<int *> ag = {&i};
-	vector<int *> ah = {&e, &f, &j, &k};
-	vector<int *> ai = {&f, &g, &j};
-	vector<int *> aj = {&h, &i, &l};
-	vector<int *> ak = {&h, &l};
-	vector<int *> al = {&j, &k};
+	vector<StoryNode *> a1 = {&s2, &s3};
+	vector<StoryNode *> a2 = {&s1};
+	vector<StoryNode *> a3 = {&s1};
 
-	Graph<int> gr;
-	gr.addVertex(&a, aa);
-	gr.addVertex(&b, ab);
-	gr.addVertex(&c, ac);
-	gr.addVertex(&d, ad);
-	gr.addVertex(&e, ae);
-	gr.addVertex(&f, af);
-	gr.addVertex(&g, ag);
-	gr.addVertex(&h, ah);
-	gr.addVertex(&i, ai);
-	gr.addVertex(&j, aj);
-	gr.addVertex(&k, ak);
-	gr.addVertex(&l, al);
+	Graph<StoryNode> g;
 
-	gr.printGraph();
+	g.addVertex(&s1, a1);
+	g.addVertex(&s2, a2);
+	g.addVertex(&s3, a3);
 
-	gr.removeVertex(&a);
-	gr.removeVertex(&b);
-	gr.removeVertex(&c);
-	gr.removeVertex(&d);
-	gr.removeVertex(&e);
-	gr.removeVertex(&f);
-	gr.removeVertex(&g);
+	g.printGraph();
+	cout << g.isNeighbor(&s1, &s3) << endl;
 
-	cout << "**********" << endl;
-	gr.printGraph();
+	g.removeVertex(&s1);
 
+	cout << "********" << endl;
+	g.printGraph();
+	cout << g.isNeighbor(&s1, &s3) << endl;
 
 	return 0;
 }

@@ -72,6 +72,8 @@ public:
 	//Since we are initialising a new object, v must be whatever we are using to initialise our vertices
 	void addVertex(T *value, std::vector<T *> adjacent);
 	void removeVertex(T *value);
+	bool isNeighbor(T *home, T *check);
+	bool isComplete();
 	void printGraph();
 };
 
@@ -100,10 +102,6 @@ void Graph<T>::addVertex(T *value, std::vector<T *> adjacent) {
 		}
 		this->adjacencyList.insert(make_pair(v, adj));
 	}
-		//If the values does not exist, place it and the adjacency in there
-		//Otherwise, do nothing
-
-
 }
 
 //Note that this will not free any memory. This only removes the reference from the graph
@@ -134,13 +132,30 @@ void Graph<T>::removeVertex(T *value) {
 	}
 }
 
+//We need to check that 'home' and 'check' actually exist first
+template <typename T>
+bool Graph<T>::isNeighbor(T *home, T *check) {
+	Vertex<T> v1(home);
+	Vertex<T> v2(check);
+	auto it = std::find(this->adjacencyList[v1].begin(), this->adjacencyList[v1].end(), v2);
+	return (it != this->adjacencyList[v1].end());
+}
+
+//This may be a long process, since we have to check everything is adjacent to everything else,
+//And we can have thousands or millions of nodes
+template <typename T>
+bool Graph<T>::isComplete() {
+	cout << "Not yet implemented" << endl;
+	return false;
+}
+
 template <typename T>
 void Graph<T>::printGraph() {
 	std::vector<Vertex<T>> keys;
 	for(auto v: this->adjacencyList) {
-		cout << "KEY: " << *(v.first.getValue()) << endl;
+		cout << "KEY: " << (v.first.getValue())->getId() << endl;
 		for (auto vAdj: v.second) {
-			cout << "VALUE: " << *(vAdj.getValue()) << endl;
+			cout << "VALUE: " << (vAdj.getValue())->getId() << endl;
 		}
 	}
 
