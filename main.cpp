@@ -55,6 +55,11 @@ int main() {
 
 	gr.printGraph();
 
+	gr.removeVertex(&h);
+
+	cout << "**********" << endl;
+	gr.printGraph();
+
 
 	return 0;
 }

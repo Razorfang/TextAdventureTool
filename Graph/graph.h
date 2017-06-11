@@ -11,12 +11,15 @@
 #define GRAPH_GRAPH_H_
 
 #include <vector>
+#include <algorithm>
 #include <unordered_map>
 
 template <typename T>
 class Vertex {
 	private:
-		T *value; //Store by reference to avoid copying large classes
+		T *value; //Store by const reference to avoid copying large classes
+				  //Should this be const? There are situations where people might want to modify their graph data
+					//If we make the pointer const, this is the same as making the thing it points to read-only
 	public:
 		Vertex(T *value);
 		T *getValue() const;
@@ -81,7 +84,9 @@ Graph<T>::~Graph() {
 }
 
 //NOTE: Should we allow something to be its own neighbor? This might be good for repeating something in the vertex over and over....
+	//Try it out for now. If it causes problems in testing, then it'll be removed. It's not a bug, it's a feature.
 //Also, should we allow a vertex to add a neighbor that does not currently exist
+	//Yes, otherwise we could never add the first vertex. It wouldn't be allowed to have any neighbors!
 template <typename T>
 void Graph<T>::addVertex(T *value, std::vector<T *> adjacent) {
 
@@ -101,15 +106,29 @@ void Graph<T>::addVertex(T *value, std::vector<T *> adjacent) {
 
 }
 
+//Note that this will not free any memory. This only removes the reference from the graph
+//Any memory allocated outside the graph will need to be freed by you (yes, you)
 template <typename T>
 void Graph<T>::removeVertex(T *value) {
-	//Check that the value does not already exist
-	//if (this->adjacencyList.find(Vertex<T>(value)) != this->adjacencyList.end()) {
-		this->adjacencyList.erase(Vertex<T>(value));
-	//}
 
-		//If we remove a vertex, we also need to remove it from all the other vertices' list of neighbors
-		//Otherwise, we will have a reference to a vertex that does not exist
+	Vertex<T> outcast = Vertex<T>(value);
+
+	//If we remove a vertex, we also need to remove it from all the other vertices' list of neighbors
+	//Otherwise, we will have a reference to a vertex that does not exist
+	std::vector<Vertex<T>> neighbors = this->adjacencyList[outcast];
+
+	this->adjacencyList.erase(outcast);
+
+	for (auto n: neighbors) {
+		auto it = std::find(this->adjacencyList[n].begin(), this->adjacencyList[n].end(), outcast);
+		if (it != this->adjacencyList[n].end()) {
+
+			//I've read that if you don't care for order (like us), you can avoid overhead of moving items by
+			//swapping the outcast with the item at the end of the container, then calling pop_back.
+			std::swap(*it, this->adjacencyList[n].back());
+			this->adjacencyList[n].pop_back();
+		}
+	}
 }
 
 template <typename T>
