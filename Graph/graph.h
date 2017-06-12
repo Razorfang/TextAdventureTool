@@ -74,6 +74,7 @@ public:
 	void removeVertex(T *value);
 	bool isNeighbor(T *home, T *check);
 	bool isComplete();
+	std::vector<T *> getNeighbors(T *value);
 	void printGraph();
 };
 
@@ -147,6 +148,16 @@ template <typename T>
 bool Graph<T>::isComplete() {
 	cout << "Not yet implemented" << endl;
 	return false;
+}
+
+template <typename T>
+std::vector<T *> Graph<T>::getNeighbors(T *value) {
+
+	std::vector<T *> neighbors;
+	for (auto n: this->adjacencyList[Vertex<T>(value)]) {
+		neighbors.push_back(n.getValue());
+	}
+	return neighbors;
 }
 
 template <typename T>

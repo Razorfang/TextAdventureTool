@@ -30,6 +30,12 @@ int main() {
 	g.printGraph();
 	cout << g.isNeighbor(&s1, &s3) << endl;
 
+	vector<StoryNode *> n = g.getNeighbors(&s1);
+	for (auto x: n) {
+		cout << "Neighbor: " << x->getId() << endl;
+	}
+
+
 	g.removeVertex(&s1);
 
 	cout << "********" << endl;
