@@ -9,6 +9,7 @@
 #define STORYNODE_STORYNODE_H_
 
 /*Story Nodes are self-contained units which contain what we are going to do at any given time*/
+#include <algorithm>
 
 class StoryNode {
 private:
@@ -17,28 +18,10 @@ protected:
 public:
 	StoryNode(int id);
 	~StoryNode();
-	bool operator==(const StoryNode& sn) const{
-		return (this->id == sn.id);
-	}
+	bool operator==(const StoryNode& sn) const;
 	int getId() const;
 	void setId(int id);
 };
-
-StoryNode::StoryNode(int id) {
-	this->id = id;
-}
-
-StoryNode::~StoryNode() {
-
-}
-
-int StoryNode::getId() const{
-	return this->id;
-}
-
-void StoryNode::setId(int id) {
-	this->id = id;
-}
 
 //A way to hash a storynode. This is needed for the graphing library
 namespace std {
