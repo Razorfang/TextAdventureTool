@@ -15,7 +15,25 @@
 #ifndef COMPILER_COMPILER_H_
 #define COMPILER_COMPILER_H_
 
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
+class Lexer {
+	private:
+		string filename;
+	public:
+		Lexer(string filename);
+		string getFilename();
+		void setFilename(string filename);
+		bool isComment(string line);
+		void printFile();
+};
+
+class Parser {
+
+};
 
 
 #endif /* COMPILER_COMPILER_H_ */

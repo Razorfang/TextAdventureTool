@@ -10,6 +10,7 @@ using namespace std;
 
 #include "Graph/graph.h"
 #include "StoryNode/storynode.h"
+#include "Compiler/compiler.h"
 
 int main() {
 
@@ -41,6 +42,11 @@ int main() {
 	cout << "********" << endl;
 	g.printGraph();
 	cout << g.isNeighbor(&s1, &s3) << endl;
+
+
+	Lexer l("Compiler/commands.txt");
+	l.printFile();
+
 
 	return 0;
 }
