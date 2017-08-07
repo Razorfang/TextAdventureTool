@@ -14,9 +14,9 @@ using namespace std;
 
 int main() {
 
-	StoryNode s1 = StoryNode(1);
-	StoryNode s2 = StoryNode(2);
-	StoryNode s3 = StoryNode(3);
+	StoryNode s1 = StoryNode();
+	StoryNode s2 = StoryNode();
+	StoryNode s3 = StoryNode();
 
 	vector<StoryNode *> a1 = {&s2, &s3};
 	vector<StoryNode *> a2 = {&s1};
@@ -33,16 +33,18 @@ int main() {
 
 	vector<StoryNode *> n = g.getNeighbors(&s1);
 	for (auto x: n) {
-		cout << "Neighbor: " << x->getId() << endl;
+		cout << "Neighbor: " << x->getNodeId() << endl;
 	}
 
 
-	g.removeVertex(&s1);
+	//g.removeVertex(&s1);
 
 	cout << "********" << endl;
 	g.printGraph();
-	cout << g.isNeighbor(&s1, &s3) << endl;
 
+	if (g.isNeighbor(&s2, &s3)) {
+		cout << "These two are neighbors" << endl;
+	}
 
 	Lexer l("Compiler/commands.txt");
 	l.printFile();

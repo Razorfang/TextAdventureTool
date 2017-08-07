@@ -139,7 +139,12 @@ bool Graph<T>::isNeighbor(T *home, T *check) {
 	Vertex<T> v1(home);
 	Vertex<T> v2(check);
 	auto it = std::find(this->adjacencyList[v1].begin(), this->adjacencyList[v1].end(), v2);
-	return (it != this->adjacencyList[v1].end());
+	if (it != this->adjacencyList[v1].end()) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 //This may be a long process, since we have to check everything is adjacent to everything else,
@@ -164,9 +169,9 @@ template <typename T>
 void Graph<T>::printGraph() {
 	std::vector<Vertex<T>> keys;
 	for(auto v: this->adjacencyList) {
-		cout << "KEY: " << (v.first.getValue())->getId() << endl;
+		cout << "KEY: " << (v.first.getValue())->getNodeId() << endl;
 		for (auto vAdj: v.second) {
-			cout << "VALUE: " << (vAdj.getValue())->getId() << endl;
+			cout << "VALUE: " << (vAdj.getValue())->getNodeId() << endl;
 		}
 	}
 

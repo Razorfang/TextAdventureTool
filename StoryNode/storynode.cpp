@@ -10,22 +10,16 @@
 #include <iostream>
 using namespace std;
 
-StoryNode::StoryNode(int id) {
-	this->id = id;
+int StoryNode::ID = 0;
+
+StoryNode::StoryNode() {
+	this->nodeID = ++ID;
 }
 
 StoryNode::~StoryNode() {
 
 }
 
-bool StoryNode::operator==(const StoryNode& sn) const {
-	return (this->id == sn.id);
-}
-
-int StoryNode::getId() const{
-	return this->id;
-}
-
-void StoryNode::setId(int id) {
-	this->id = id;
+int StoryNode::getNodeId() const{
+	return this->nodeID;
 }
